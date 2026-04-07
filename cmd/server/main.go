@@ -5,6 +5,7 @@ import (
 
 	"github.com/Aditya7880900936/credes-backend/internal/config"
 	"github.com/Aditya7880900936/credes-backend/internal/db"
+	"github.com/Aditya7880900936/credes-backend/internal/handler"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,6 +19,8 @@ func main() {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "pong"})
 	})
+	r.POST("/auth/register", handler.Register)
+	r.POST("/auth/login", handler.Login)
 
 	log.Println("Server running on port", cfg.Port)
 	r.Run(":" + cfg.Port)
