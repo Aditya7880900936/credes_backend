@@ -6,7 +6,6 @@ import (
 
 	"github.com/Aditya7880900936/credes-backend/internal/config"
 	"github.com/Aditya7880900936/credes-backend/internal/service"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +15,15 @@ type RegisterRequest struct {
 	FullName string `json:"full_name"`
 }
 
+// Register godoc
+// @Summary Register a new user
+// @Description Create user with email & password
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body handler.RegisterRequest true "Register Request"
+// @Success 201 {object} map[string]interface{}
+// @Router /auth/register [post]
 func Register(c *gin.Context) {
 	var req RegisterRequest
 
@@ -33,6 +41,14 @@ func Register(c *gin.Context) {
 	c.JSON(201, user)
 }
 
+// Login godoc
+// @Summary Login user
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param request body handler.RegisterRequest true "Login Request"
+// @Success 200 {object} map[string]string
+// @Router /auth/login [post]
 func Login(c *gin.Context) {
 	var req RegisterRequest
 
@@ -52,6 +68,13 @@ func Login(c *gin.Context) {
 	c.JSON(200, gin.H{"token": token})
 }
 
+// SoftDeleteUser godoc
+// @Summary Deactivate a user
+// @Tags Admin
+// @Security BearerAuth
+// @Param id path int true "User ID"
+// @Success 200 {object} map[string]string
+// @Router /admin/users/{id} [delete]	
 func SoftDeleteUser(c *gin.Context) {
 	userID, _ := strconv.ParseInt(c.Param("id"), 10, 64)
 

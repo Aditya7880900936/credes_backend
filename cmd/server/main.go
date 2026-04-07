@@ -1,13 +1,24 @@
+// @title Task Management API
+// @version 1.0
+// @description Backend API for task management system with RBAC, JWT, and soft delete
+// @host localhost:8080
+// @BasePath /
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 package main
 
 import (
 	"log"
 
+	_ "github.com/Aditya7880900936/credes-backend/docs"
 	"github.com/Aditya7880900936/credes-backend/internal/config"
 	"github.com/Aditya7880900936/credes-backend/internal/db"
 	"github.com/Aditya7880900936/credes-backend/internal/handler"
 	"github.com/Aditya7880900936/credes-backend/internal/middleware"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -20,7 +31,7 @@ func main() {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "pong"})
 	})
-
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.POST("/auth/register", handler.Register)
 	r.POST("/auth/login", handler.Login)
 
