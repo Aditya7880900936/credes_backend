@@ -40,6 +40,9 @@ func main() {
 	auth.GET("/tasks", handler.GetTasks)
 	auth.PATCH("/tasks/:id/status", handler.UpdateTaskStatus)
 
+	auth.POST("/tasks/:id/comments", handler.AddComment)
+	auth.GET("/tasks/:id/comments", handler.GetComments)
+
 	admin := r.Group("/admin")
 	admin.Use(middleware.AuthMiddleware(), middleware.RequireRole("admin"))
 
@@ -49,6 +52,8 @@ func main() {
 
 	admin.POST("/tasks", handler.CreateTask)
 	admin.DELETE("/tasks/:id", handler.DeleteTask)
+
+	admin.PATCH("/users/:id/soft-delete", handler.SoftDeleteUser)
 
 	log.Println("Server running on port", cfg.Port)
 	r.Run(":" + cfg.Port)

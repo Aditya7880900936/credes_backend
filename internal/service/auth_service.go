@@ -42,3 +42,7 @@ func LoginUser(email, password, secret string) (string, error) {
 
 	return utils.GenerateToken(user.ID, string(user.Role), secret)
 }
+
+func SoftDeleteUser(userID int64) error {
+	return repository.SoftDeleteUser(userID)
+}

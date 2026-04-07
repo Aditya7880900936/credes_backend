@@ -2,8 +2,9 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
-	"github.com/Aditya7880900936/credes-backend/internal/config"	
+	"github.com/Aditya7880900936/credes-backend/internal/config"
 	"github.com/Aditya7880900936/credes-backend/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -49,4 +50,16 @@ func Login(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"token": token})
+}
+
+func SoftDeleteUser(c *gin.Context) {
+	userID, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+
+	err := service.SoftDeleteUser(userID)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, gin.H{"msg": "user deactivated"})
 }

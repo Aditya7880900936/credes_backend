@@ -27,3 +27,9 @@ func GetUserByEmail(email string) (*models.User, error) {
 	err := db.DB.Get(&user, query, email)
 	return &user, err
 }
+
+func SoftDeleteUser(userID int64) error {
+	query := `UPDATE users SET is_active=false WHERE id=$1`
+	_, err := db.DB.Exec(query, userID)
+	return err
+}
