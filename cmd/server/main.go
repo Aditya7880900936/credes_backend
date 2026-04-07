@@ -37,12 +37,18 @@ func main() {
 		})
 	})
 
+	auth.GET("/tasks", handler.GetTasks)
+	auth.PATCH("/tasks/:id/status", handler.UpdateTaskStatus)
+
 	admin := r.Group("/admin")
 	admin.Use(middleware.AuthMiddleware(), middleware.RequireRole("admin"))
 
 	admin.GET("/dashboard", func(c *gin.Context) {
 		c.JSON(200, gin.H{"msg": "admin access granted"})
 	})
+
+	admin.POST("/tasks", handler.CreateTask)
+	admin.DELETE("/tasks/:id", handler.DeleteTask)
 
 	log.Println("Server running on port", cfg.Port)
 	r.Run(":" + cfg.Port)
