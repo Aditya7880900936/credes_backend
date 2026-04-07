@@ -26,6 +26,7 @@ This project demonstrates clean backend engineering practices:
 | DB Layer | `sqlx` |
 | Authentication | JWT |
 | Password Hashing | bcrypt |
+| API Docs | Swagger / OpenAPI |
 
 ---
 
@@ -107,7 +108,35 @@ Authorization: Bearer <token>
 
 ---
 
-## 🧹 Soft Delete Strategy
+## 📖 API Documentation (Swagger)
+
+This project includes interactive **Swagger UI** documentation powered by OpenAPI.
+
+Once the server is running, visit:
+
+```
+http://localhost:8080/swagger/index.html
+```
+
+The Swagger UI covers all available endpoints grouped by resource:
+
+| Group | Endpoints |
+|---|---|
+| **Tasks** | `GET /admin/tasks`, `POST /admin/tasks`, `PATCH /admin/tasks/{id}/status` |
+| **Admin** | `DELETE /admin/users/{id}` |
+| **Auth** | `POST /auth/login`, `POST /auth/register` |
+| **Comments** | `POST /tasks/{id}/comments` |
+
+### Authenticating in Swagger
+
+1. Login via `POST /auth/login` to get your JWT token
+2. Click the **Authorize 🔒** button at the top right
+3. Enter your token as: `Bearer <your_token>`
+4. All protected routes will now include your credentials automatically
+
+---
+
+
 
 Users are never physically removed from the database. Instead:
 
@@ -193,7 +222,6 @@ The API was manually tested using **Postman**, covering the following scenarios:
 
 - [ ] Pagination and filtering for list endpoints
 - [ ] Unit and integration test coverage
-- [ ] Swagger / OpenAPI documentation
 - [ ] Rate limiting and response caching
 - [ ] Refresh token support
 
